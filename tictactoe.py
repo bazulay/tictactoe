@@ -1,18 +1,14 @@
 from enum import Enum
 from random import randint
-class players(Enum):
-    x="X"
-    o="O"
-    default="."
 class gameState(Enum):
     win=1
     draw=2
     notfinished=3
 class Game(object):
     def __init__(self,gamemode):        
-        self.player1=players.x
-        self.player2=players.o
-        self.empty=players.default
+        self.player1="X"
+        self.player2="O"
+        self.empty="."
         self.board=[self.empty]*9
         self.gamemode=gamemode  
 
@@ -21,11 +17,7 @@ class Game(object):
             currentrowstart=i*3            
             print(self.board[currentrowstart].value+self.board[currentrowstart+1].value+self.board[currentrowstart+2].value) 
 
-    def play(self,row,column,player):
-        place=row * 3 + column
-        self.board[place]=player
-
-    def playbot(self,place,player):     
+    def play(self,place,player):     
         self.board[place]=player
 
     def start(self):
@@ -39,10 +31,11 @@ class Game(object):
                 player=self.player2
                 if self.gamemode=="s":
                     place=randint(0,8)
-                    if self.is_place_taken_bot(place):
+                    if self.is_place_taken(place):
                         continue
-                    self.playbot(place,player)
-            if (self.gamemode=="s"and player == self.player1)or self.gamemode=="m":                                    
+                    self.play(place,player)
+            if (self.gamemode=="s"and player == self.player1)or self.gamemode=="m":
+                print(player + "your turn!")           
                 print("enter row")
                 row=int(input())-1
                 while not (row<=2 and row >=0):
@@ -53,10 +46,10 @@ class Game(object):
                 while not (column<=2 and column >=0):
                     print("column should be between 1 and 3, try again")
                     column=int(input())-1            
-                if self.is_place_taken(row,column):
+                if self.is_place_taken(row*3+column):
                     print("this spot is already taken")
                     continue
-                self.play(row,column,player)
+                self.play(row*3+column,player)
             turn = turn + 1 
             self.board_print()
             exit_condition=self.is_gameover(player)
@@ -64,13 +57,8 @@ class Game(object):
                 print("Congratulations to "+ player.value +" who won the game")
             elif exit_condition== gameState.draw:
                 print("This game ended in a draw, no one won")
-    def is_place_taken(self,row,column):
-        place=row * 3 + column
-        if not self.board[place]==self.empty:
-            return True
-        return False
     
-    def is_place_taken_bot(self,place):    
+    def is_place_taken(self,place):    
         if not self.board[place]==self.empty:
             return True
         return False
