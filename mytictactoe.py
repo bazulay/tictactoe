@@ -5,6 +5,7 @@ import random
 board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 user_id = 0
+
 take_mode = int(input("select mode\n1.singleplayer\n2.dual player"))
 
 def board_print(brd):
