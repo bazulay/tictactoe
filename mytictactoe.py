@@ -12,7 +12,7 @@ def board_print(brd):
     format = ".XO"
     for row in range(3):
         print(' '.join(format[i] for i in brd[row*3:(row+1) * 3]))
-
+#another comment
 def get_winner(brd):
     for i in range(3):
         row = set(brd[i*3:(i+1) * 3])
