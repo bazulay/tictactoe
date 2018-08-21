@@ -1,5 +1,7 @@
 import random
 
+#this comment is for testing git 
+
 board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 user_id = 0
